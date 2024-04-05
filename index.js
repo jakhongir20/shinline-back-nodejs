@@ -1,7 +1,9 @@
-import express from "express";
-import bodyParser from "body-parser";
+require("dotenv").config();
 
-import db from "./mongoC.js";
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const db = require("./mongoC.js");
 
 const port = 4000;
 const app = express();

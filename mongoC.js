@@ -1,14 +1,24 @@
-import { MongoClient } from "mongodb";
+const { MongoClient } = require("mongodb");
 
 const password = encodeURIComponent(process.env.MONGO_PASSWORD.trim());
-const connectionString = `mongodb+srv://integrationninjas:${password}@devcluster.xf2gcci.mongodb.net/?retryWrites=true&w=majority`; // clustore url
-const client = new MongoClient(connectionString);
-let conn;
-try {
-  conn = await client.connect();
-  console.log("connection successful");
-} catch (e) {
-  console.error(e);
+const connectionString = `mongodb+srv://bojakhongir:${password}@mern-shinline-deploymen.vvxobrx.mongodb.net/?retryWrites=true&w=majority&appName=MERN-shinline-deployment`; // clustore url
+
+async function connectToDatabase() {
+  const client = new MongoClient(connectionString);
+
+  try {
+    // Connect to MongoDB server
+    await client.connect();
+    console.log("Connected to MongoDB");
+
+    // Access the database
+    const db = client.db("MERN-shinline-deployment");
+
+    return db;
+  } catch (err) {
+    console.error("Error connecting to MongoDB:", err);
+    throw err; // Rethrow the error to handle it in the calling code
+  }
 }
-let db = conn.db("integration_ninjas");
-export default db;
+
+module.exports = connectToDatabase();
